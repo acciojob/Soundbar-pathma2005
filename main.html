@@ -1,23 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soundbar</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div id="buttons">
-    <button class="btn">applause</button>
-    <button class="btn">boo</button>
-    <button class="btn">gasp</button>
-    <button class="btn">tada</button>
-    <button class="btn">victory</button>
-    <button class="btn">wrong</button>
-    <button class="btn stop">stop</button>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soundbar</title>
+    <style>
+      body {
+        background-color: #a86de7;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        gap: 20px;
+      }
 
-  <script src="script.js"></script>
-</body>
+      #buttons {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn {
+        background-color: #5d2eab;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 20px 40px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #7845c0;
+      }
+
+      .stop {
+        background-color: #b4161b;
+      }
+
+      .stop:hover {
+        background-color: #e0242a;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Audio files -->
+    <audio id="applause" src="source/applause.mp3.mp3"></audio>
+    <audio id="boo" src="source/Boo.mp3.mp3"></audio>
+    <audio id="gasp" src="source/gasp.mp3.mp3"></audio>
+    <audio id="tada" src="source/tada.mp3.mp3"></audio>
+    <audio id="victory" src="source/victory.mp3.mp3"></audio>
+    <audio id="wrong" src="source/wrong.mp3.mp3"></audio>
+
+    <!-- Buttons container -->
+    <div id="buttons"></div>
+     <script>
+      const sounds = ["applause", "boo", "gasp", "tada", "victory", "wrong"];
+      const buttonsDiv = document.getElementById("buttons");
+
+      // Create one button for each sound
+      sounds.forEach(sound => {
+        const btn = document.createElement("button");
+        btn.classList.add("btn");
+        btn.textContent = sound;
+
+        btn.addEventListener("click", () => {
+          stopSounds();
+          document.getElementById(sound).play();
+        });
+
+        buttonsDiv.appendChild(btn);
+      });
+
+      // Create Stop button
+      const stopBtn = document.createElement("button");
+      stopBtn.classList.add("btn", "stop");
+      stopBtn.textContent = "Stop All";
+      stopBtn.addEventListener("click", stopSounds);
+      buttonsDiv.appendChild(stopBtn);
+
+      // Stop all sounds
+      function stopSounds() {
+        sounds.forEach(sound => {
+          const audio = document.getElementById(sound);
+          audio.pause();
+          audio.currentTime = 0;
+        });
+      }
+    </script>
+  </body>
 </html>
-
